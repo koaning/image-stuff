@@ -1,0 +1,104 @@
+.image-preview-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    min-height: 400px;
+    padding: 20px;
+}
+
+#imageContainer {
+    position: relative;
+    background-image: 
+        linear-gradient(45deg, #ccc 25%, transparent 25%),
+        linear-gradient(-45deg, #ccc 25%, transparent 25%),
+        linear-gradient(45deg, transparent 75%, #ccc 75%),
+        linear-gradient(-45deg, transparent 75%, #ccc 75%);
+    background-size: 20px 20px;
+    background-position: 0 0, 0 10px, 10px -10px, -10px 0;
+    background-color: white;
+    border-radius: 8px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+#imageCanvas, #overlayCanvas {
+    display: block;
+    position: absolute;
+    top: 0;
+    left: 0;
+    border-radius: 8px;
+}
+
+#overlayCanvas {
+    cursor: crosshair;
+}
+
+.selection-area {
+    position: absolute;
+    border: 2px solid rgba(65, 105, 225, 0.8);
+    background-color: rgba(65, 105, 225, 0.1);
+    cursor: move;
+    box-sizing: border-box;
+    pointer-events: all;
+    z-index: 10;
+}
+
+.resize-handle {
+    position: absolute;
+    width: 10px;
+    height: 10px;
+    background-color: white;
+    border: 2px solid royalblue;
+    border-radius: 50%;
+    z-index: 20;
+}
+
+.nw {
+    top: -5px;
+    left: -5px;
+    cursor: nw-resize;
+}
+
+.ne {
+    top: -5px;
+    right: -5px;
+    cursor: ne-resize;
+}
+
+.se {
+    bottom: -5px;
+    right: -5px;
+    cursor: se-resize;
+}
+
+.sw {
+    bottom: -5px;
+    left: -5px;
+    cursor: sw-resize;
+}
+
+.delete-button {
+    position: absolute;
+    top: -20px;
+    right: -20px;
+    width: 20px;
+    height: 20px;
+    background-color: red;
+    color: white;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    font-size: 16px;
+    font-weight: bold;
+    z-index: 30;
+}
+
+.delete-button:hover {
+    background-color: darkred;
+}
+
+.controls-container {
+    margin-bottom: 20px;
+}

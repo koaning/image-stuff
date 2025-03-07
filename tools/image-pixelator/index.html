@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Image Pixelator</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        #fileInput {
+            display: none;
+        }
+        #imageContainer {
+            position: relative;
+            display: inline-block;
+            background: repeating-linear-gradient(45deg, #ccc 25%, transparent 25%, transparent 75%, #ccc 75%, #ccc 100%),
+                        repeating-linear-gradient(45deg, #ccc 25%, transparent 25%, transparent 75%, #ccc 75%, #ccc 100%) 10px 10px;
+            background-size: 20px 20px;
+        }
+        #imageCanvas, #overlayCanvas {
+            position: absolute;
+            top: 0;
+            left: 0;
+        }
+        #overlayCanvas {
+            cursor: crosshair;
+        }
+    </style>
+</head>
+<body class="min-h-screen bg-gray-100">
+    <div class="container mx-auto px-4 py-8">
+        <!-- Navigation -->
+        <nav class="mb-8">
+            <a href="/" class="text-indigo-600 hover:text-indigo-800 flex items-center gap-2">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+                    <path fill-rule="evenodd" d="M12.707 5.293a1 1 0 010 1.414L9.414 10l3.293 3.293a1 1 0 01-1.414 1.414l-4-4a1 1 0 010-1.414l4-4a1 1 0 011.414 0z" clip-rule="evenodd" />
+                </svg>
+                Back to Tools
+            </a>
+        </nav>
+
+        <!-- Main Content -->
+        <div class="max-w-4xl mx-auto">
+            <div class="bg-white rounded-xl shadow-lg p-6">
+                <h1 class="text-2xl font-bold text-gray-800 mb-6">Image Pixelator</h1>
+
+                <!-- Upload Area -->
+                <div id="dropZone" class="border-2 border-dashed border-gray-300 rounded-xl p-8 text-center cursor-pointer hover:border-indigo-500 transition-colors">
+                    <input type="file" id="fileInput" accept="image/*">
+                    <div class="flex flex-col items-center justify-center gap-4">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-12 w-12 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
+                        </svg>
+                        <div>
+                            <p class="text-gray-600">Drop your image here or click to upload</p>
+                            <p class="text-sm text-gray-500 mt-1">Supports PNG, JPG, GIF</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Controls -->
+                <div class="mt-8 controls-container">
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                        <div class="space-y-2">
+                            <label for="pixelSize" class="block text-sm font-medium text-gray-700">
+                                Pixel Size: <span id="pixelSizeValue" class="text-indigo-600">10</span>px
+                            </label>
+                            <input type="range" 
+                                   id="pixelSize" 
+                                   min="2" 
+                                   max="50" 
+                                   value="10"
+                                   class="w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer accent-indigo-600">
+                        </div>
+
+                        <div class="space-y-2 flex gap-4">
+                            <button id="undoBtn" 
+                                    disabled
+                                    class="bg-gray-600 text-white py-2 px-4 rounded-lg font-medium transition-colors duration-300 hover:bg-gray-700 disabled:bg-gray-300 disabled:cursor-not-allowed">
+                                Undo Last Point
+                            </button>
+                            <button id="clearBtn" 
+                                    disabled
+                                    class="bg-gray-600 text-white py-2 px-4 rounded-lg font-medium transition-colors duration-300 hover:bg-gray-700 disabled:bg-gray-300 disabled:cursor-not-allowed">
+                                Clear Selection
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Instructions -->
+                    <div class="mt-4 p-4 bg-blue-50 rounded-lg">
+                        <p class="text-sm text-blue-800">
+                            Click to add points to create a polygon. Double-click or click the first point to complete the shape. The area inside will be pixelated.
+                        </p>
+                    </div>
+
+                    <!-- Download Button -->
+                    <div class="mt-6 flex justify-center">
+                        <button id="downloadBtn" 
+                                disabled 
+                                class="bg-indigo-600 text-white px-6 py-2 rounded-lg font-medium transition-colors duration-300 hover:bg-indigo-700 disabled:bg-gray-300 disabled:cursor-not-allowed">
+                            Download Image
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Image Preview -->
+                <div class="image-preview-container">
+                    <div id="imageContainer">
+                        <canvas id="imageCanvas"></canvas>
+                        <canvas id="overlayCanvas"></canvas>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
