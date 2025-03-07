@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Corner Rounder - Image Tools</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        .transparency-bg {
+            background-image: linear-gradient(45deg, #f0f0f0 25%, transparent 25%),
+                            linear-gradient(-45deg, #f0f0f0 25%, transparent 25%),
+                            linear-gradient(45deg, transparent 75%, #f0f0f0 75%),
+                            linear-gradient(-45deg, transparent 75%, #f0f0f0 75%);
+            background-size: 20px 20px;
+            background-position: 0 0, 0 10px, 10px -10px, -10px 0px;
+            background-color: #ffffff;
+        }
+    </style>
+</head>
+<body class="min-h-screen bg-gray-100">
+    <!-- Navigation -->
+    <nav class="bg-white shadow-sm">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between h-16">
+                <div class="flex">
+                    <a href="/" class="flex items-center px-2 py-2 text-gray-600 hover:text-gray-900">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7" />
+                        </svg>
+                        Back to Tools
+                    </a>
+                </div>
+                <div class="flex items-center">
+                    <h1 class="text-xl font-semibold text-gray-800">Corner Rounder</h1>
+                </div>
+                <div class="w-20"></div><!-- Spacer for centering -->
+            </div>
+        </div>
+    </nav>
+
+    <div class="p-8">
+        <div class="max-w-4xl mx-auto">
+            <div class="bg-white rounded-2xl shadow-lg p-8">
+                <h1 class="text-3xl font-bold text-gray-800 mb-8">Image Editor</h1>
+                <div id="dropZone" class="border-2 border-dashed border-gray-300 rounded-xl p-8 text-center transition-colors duration-300 hover:border-blue-500 cursor-pointer mb-8">
+                    <div class="space-y-2">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-12 w-12 mx-auto text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
+                        </svg>
+                        <p class="text-gray-600">Drop an image here or click to upload</p>
+                    </div>
+                    <input type="file" id="fileInput" accept="image/*" class="hidden">
+                </div>
+
+                <div class="space-y-6">
+                    <div class="space-y-2">
+                        <label for="cornerRadius" class="block text-sm font-medium text-gray-700">
+                            Corner Radius: <span id="radiusValue" class="text-blue-600">0</span>px
+                        </label>
+                        <input type="range" 
+                               id="cornerRadius" 
+                               min="0" 
+                               max="100" 
+                               value="0"
+                               class="w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer accent-blue-600">
+                    </div>
+
+                    <div class="grid grid-cols-2 gap-4">
+                        <button id="downloadBtn" 
+                                disabled 
+                                class="bg-blue-600 text-white py-3 px-6 rounded-lg font-medium transition-colors duration-300 hover:bg-blue-700 disabled:bg-gray-300 disabled:cursor-not-allowed">
+                            Download Image
+                        </button>
+                        <button id="copyBtn" 
+                                disabled 
+                                class="bg-gray-600 text-white py-3 px-6 rounded-lg font-medium transition-colors duration-300 hover:bg-gray-700 disabled:bg-gray-300 disabled:cursor-not-allowed">
+                            Copy to Clipboard
+                        </button>
+                    </div>
+                </div>
+
+                <div class="mt-8 rounded-xl overflow-hidden transparency-bg">
+                    <canvas id="imageCanvas" class="hidden"></canvas>
+                    <img id="imagePreview" class="hidden max-w-full h-auto mx-auto" alt="Preview">
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src="script.js"></script>
+</body>
+</html>
